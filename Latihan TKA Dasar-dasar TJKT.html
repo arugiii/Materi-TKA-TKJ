@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Latihan TKA TJKT</title>
+<style>
+:root{--bg:#f3f6f8;--card:#fff;--ink:#14232e;--mute:#5b6b76;--line:#d3dde3;--accent:#0b6e8a;--ok:#16794a;--okbg:#e2f4ea;--no:#b3261e;--nobg:#fbe5e3;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e171d;--card:#16232b;--ink:#e6eef2;--mute:#97a8b3;--line:#2a3b46;--accent:#4cc3e0;--ok:#5fd596;--okbg:#14352545;--no:#ff8a80;--nobg:#3d1a1850;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e171d;--card:#16232b;--ink:#e6eef2;--mute:#97a8b3;--line:#2a3b46;--accent:#4cc3e0;--ok:#5fd596;--okbg:#14352545;--no:#ff8a80;--nobg:#3d1a1850;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:560px;margin:0 auto;padding:16px}
+h1{font-size:1.25rem;margin:4px 0 2px}
+.sub{color:var(--mute);font-size:.9rem;margin:0 0 12px}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:6px}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+.meta{display:flex;justify-content:space-between;color:var(--mute);font-size:.85rem;margin-bottom:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px}
+.tag{display:inline-block;font-size:.8rem;color:var(--accent);border:1px solid var(--accent);border-radius:4px;padding:0 6px;margin-bottom:8px}
+.q{font-size:1.05rem;margin:0 0 12px}
+.opt{display:block;width:100%;text-align:left;font:inherit;color:inherit;background:transparent;border:1px solid var(--line);border-radius:8px;padding:11px 12px;margin:0 0 8px;cursor:pointer}
+.opt:focus-visible,.next:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}
+.opt.no{border-color:var(--no);background:var(--nobg)}
+.opt[disabled]{cursor:default}
+.fb{margin-top:10px;padding:10px 12px;border-radius:8px;font-size:.95rem}
+.fb.ok{background:var(--okbg);border-left:4px solid var(--ok)}
+.fb.no{background:var(--nobg);border-left:4px solid var(--no)}
+.fb b{display:block;margin-bottom:2px}
+.next{margin-top:12px;width:100%;font:inherit;font-weight:600;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:12px;cursor:pointer}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .next{color:#05222b}}
+:root[data-theme="dark"] .next{color:#05222b}
+.score{font-size:2.4rem;font-weight:700;margin:0}
+ul{padding-left:18px;margin:8px 0}
+</style>
+</head>
+<body>
+<main>
+<h1>Latihan TKA Dasar-dasar TJKT</h1>
+<p class="sub">15 soal studi kasus. Pilih jawaban, langsung ada koreksi dan alasannya.</p>
+<div class="bar"><i id="pg"></i></div>
+<div class="meta"><span id="no"></span><span id="sc"></span></div>
+<div class="card" id="box"></div>
+</main>
+<script>
+var Q=[
+["OSI","Kabel UTP baru dites dengan LAN tester. Ujung A menyala urut 1-2-3-4-5-6-7-8, ujung B menyala 1-2-3-6-4-5-7-8. Kemungkinan penyebabnya?",["Kabel putus","Salah terminasi / urutan pasangan tertukar","Terjadi korsleting","Kabel sudah benar"],1,"Pin tetap menyala semua tetapi urutannya berbeda, artinya salah terminasi atau pertukaran pasangan. Putus = ada pin yang tidak menyala."],
+["Troubleshooting","Komputer bisa ping 8.8.8.8, tetapi membuka nama domain gagal. Komponen yang pertama diperiksa?",["DNS","Warna kabel","Default gateway fisik","Ukuran monitor"],0,"Koneksi ke IP berhasil berarti jalur jaringan beres. Yang gagal menerjemahkan nama domain ke IP adalah DNS."],
+["K3LH","Kabel berserakan di jalur jalan ruang praktik dan waktu tinggal sedikit. Tindakan paling tepat?",["Dibiarkan sampai praktik selesai","Amankan area dan tata kabel, lalu lanjut sesuai prioritas","Ganti semua kabel tanpa pemeriksaan","Matikan semua komputer"],1,"Keselamatan tidak boleh dikorbankan demi cepat. Amankan jalur dulu, baru lanjutkan pekerjaan."],
+["Alat ukur","Daya optik awal jalur −3 dBm dan di ujung −9 dBm. Berapa kehilangan dayanya?",["12 dB","−6 dBm","6 dB","−12 dB"],2,"L = P_A − P_B = (−3) − (−9) = 6 dB. Kehilangan dinyatakan dalam dB, bukan dBm."],
+["Alat ukur","Teknisi ingin mengetahui perkiraan lokasi fiber yang putus pada jalur sepanjang beberapa kilometer. Alat yang tepat?",["LAN tester","Optical Power Meter","OTDR","Crimping tool"],2,"OTDR menganalisis pantulan cahaya sehingga bisa memperkirakan lokasi gangguan. OPM hanya mengukur daya pada satu titik."],
+["Alat ukur","Hasil pengukuran daya optik berubah-ubah. Langkah analisis yang benar?",["Langsung menyalahkan kabel fiber","Ganti OPM tanpa pemeriksaan","Bersihkan konektor, cek panjang gelombang, cek kabel referensi, lalu ulangi","Tekuk kabel agar kontak lebih kuat"],2,"Penyebab umum: konektor kotor, panjang gelombang tidak sama, atau kabel referensi bermasalah. Periksa dulu sebelum menyimpulkan."],
+["FTTH","Urutan perangkat FTTH dari sisi penyedia layanan sampai rumah pelanggan?",["ONT → ODP → ODC → OLT","OLT → ODC → ODP → kabel drop → ONT","ODP → OLT → ONT → ODC","OLT → ONT → ODC → ODP"],1,"OLT di sisi ISP, lalu ODC, ODP, kabel drop, dan ONT di rumah pelanggan."],
+["OSI","Port switch dan VLAN salah konfigurasi sehingga komputer tidak bisa berkomunikasi dalam satu LAN. Layer OSI yang diperiksa?",["Layer 1 Physical","Layer 2 Data Link","Layer 3 Network","Layer 7 Application"],1,"VLAN, port switch, dan alamat MAC ada di Layer 2 (Data Link). IP dan routing ada di Layer 3."],
+["Profesi","Perusahaan akan menghubungkan kantor pusat dan tiga cabang. Siapa yang merancang topologi dan menghitung kebutuhan kabel?",["Technical Support","Network Planner","System Administrator","Teknisi pemeliharaan"],1,"Network Planner bertugas merancang topologi, jalur kabel, dan kebutuhan perangkat."],
+["Topologi","Satu kantor membutuhkan jalur alternatif agar jaringan tetap hidup jika satu jalur putus. Topologi paling tahan gangguan?",["Bus","Star","Mesh","Tree"],2,"Mesh punya banyak jalur antar node, tetapi biaya dan konfigurasinya lebih rumit."],
+["5R","Kabel rusak yang tidak dipakai lagi disingkirkan dari meja praktik. Ini penerapan prinsip?",["Rapi","Resik","Ringkas","Rajin"],2,"Ringkas = memisahkan barang yang perlu dan tidak perlu. Rapi = menata agar mudah ditemukan."],
+["Virtualisasi","VM server harus bisa diakses oleh perangkat lain di LAN fisik sebagai perangkat tersendiri. Mode jaringan VirtualBox yang cocok?",["NAT","Host-only","Internal Network","Bridged"],3,"Bridged membuat VM terhubung ke jaringan fisik seperti perangkat sendiri."],
+["Fiber","Koneksi antargedung berjarak jauh dengan kapasitas tinggi. Media yang paling sesuai?",["Fiber optik single-mode","Kabel UTP tanpa repeater","Kabel audio","Fiber multimode untuk semua jarak"],0,"Single-mode (inti sekitar 9 µm) cocok untuk jarak jauh, backbone, dan FTTH."],
+["Kabel","LAN tester menunjukkan semua pin tersambung benar. Kesimpulan yang tepat?",["Kabel pasti bisa gigabit","Pemetaan pin terindikasi benar, tetapi kualitas transmisi belum terbukti","Kabel pasti rusak","Konektor tidak perlu diperiksa lagi"],1,"Tester sederhana hanya memeriksa kontinuitas dan urutan pin, bukan kualitas atau kategori kabel."],
+["K3LH","Seorang teknisi ingin memeriksa apakah ada cahaya di ujung fiber. Tindakan yang benar?",["Melihat langsung ke ujung fiber","Memakai alat pemeriksa yang sesuai dan mengikuti SOP","Menyentuh ujung fiber","Mengabaikan karena cahaya tidak terlihat"],1,"Jangan pernah melihat langsung ujung fiber. Gunakan alat yang sesuai seperti OPM atau VFL sesuai SOP."]
+];
+var i=0,score=0,box=document.getElementById("box");
+function h(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
+function show(){
+  var q=Q[i];
+  document.getElementById("no").textContent="Soal "+(i+1)+" dari "+Q.length;
+  document.getElementById("sc").textContent="Benar: "+score;
+  document.getElementById("pg").style.width=(i/Q.length*100)+"%";
+  var s='<span class="tag">'+h(q[0])+'</span><p class="q">'+h(q[1])+'</p>';
+  q[2].forEach(function(o,k){s+='<button class="opt" data-k="'+k+'">'+"ABCD"[k]+". "+h(o)+'</button>'});
+  s+='<div id="fb"></div>';
+  box.innerHTML=s;
+  box.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){pick(+b.dataset.k)}});
+}
+function pick(k){
+  var q=Q[i],good=k===q[3],bs=box.querySelectorAll(".opt");
+  bs.forEach(function(b,n){b.disabled=true;if(n===q[3])b.classList.add("ok");else if(n===k)b.classList.add("no")});
+  if(good)score++;
+  document.getElementById("sc").textContent="Benar: "+score;
+  var last=i===Q.length-1;
+  document.getElementById("fb").innerHTML='<div class="fb '+(good?"ok":"no")+'"><b>'+(good?"Benar":"Salah. Jawaban: "+"ABCD"[q[3]])+'</b>'+h(q[4])+'</div><button class="next" id="nx">'+(last?"Lihat hasil":"Soal berikutnya")+'</button>';
+  var nx=document.getElementById("nx");nx.focus();
+  nx.onclick=function(){i++;if(i<Q.length)show();else end()};
+}
+function end(){
+  document.getElementById("pg").style.width="100%";
+  document.getElementById("no").textContent="Selesai";
+  var p=Math.round(score/Q.length*100);
+  var m=p>=80?"Sudah kuat. Ulangi sekali lagi untuk memantapkan.":p>=60?"Lumayan. Ulangi materi OSI, alat ukur, dan FTTH yang masih salah.":"Pelajari lagi ringkasan modul, lalu coba ulang.";
+  box.innerHTML='<p class="score">'+score+' / '+Q.length+'</p><p>'+m+'</p><button class="next" id="rs">Ulangi latihan</button>';
+  document.getElementById("rs").onclick=function(){i=0;score=0;show()};
+}
+show();
+</script>
+</body>
+</html>
